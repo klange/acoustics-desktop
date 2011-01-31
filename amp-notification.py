@@ -26,6 +26,11 @@ pynotify.init("Acoustics")
 
 last_result = -1
 
+def appendNotice(title, content):
+    n = pynotify.Notification(title, content, "notification-audio-volume-high")
+    n.set_hint_string('append','')
+    n.show()
+
 while 1:
     json_output = curl(amp_url)
     acoustics = simplejson.loads(json_output)
@@ -37,7 +42,8 @@ while 1:
             song_artist = acoustics['now_playing']['artist']
             song_album  = acoustics['now_playing']['album']
             print "New song: %s\nby: %s\nfrom: %s" % (song_title, song_artist, song_album)
-            n = pynotify.Notification(song_title, song_artist + " <br />" + song_album, "notification-audio-volume-high")
-            n.show()
+            appendNotice(song_title,song_artist)
+            appendNotice(song_title,song_album)
+            appendNotice(song_title,"")
 
     time.sleep(5)
