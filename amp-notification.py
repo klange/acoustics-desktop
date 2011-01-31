@@ -36,7 +36,8 @@ while 1:
             song_title  = acoustics['now_playing']['title']
             song_artist = acoustics['now_playing']['artist']
             song_album  = acoustics['now_playing']['album']
-            n = pynotify.Notification(song_title, "%s<br />%s" % (song_artist, song_album), "notification-audio-volume-high")
+            print "New song: %s\nby: %s\nfrom: %s" % (song_title, song_artist, song_album)
+            n = pynotify.Notification(song_title, song_artist + " <br />" + song_album, "notification-audio-volume-high")
             n.show()
 
     time.sleep(5)
