@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 import pynotify
 import simplejson, pycurl
-import sys, urllib, time
+import sys, urllib, time, os
 
 amp_url = "http://localhost:8080/amp/json.pl"
+
+# Silly hack
+icon_path = "file://%s/amp_a.png" % os.getcwd()
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -27,7 +30,7 @@ pynotify.init("Acoustics")
 last_result = -1
 
 def appendNotice(title, content):
-    n = pynotify.Notification(title, content, "notification-audio-volume-high")
+    n = pynotify.Notification(title, content, icon_path) #"notification-audio-volume-high")
     n.set_hint_string('append','')
     n.show()
 
