@@ -65,9 +65,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.8910769"
-     inkscape:cx="149.2243"
-     inkscape:cy="883.94796"
+     inkscape:zoom="2.6743866"
+     inkscape:cx="260.52059"
+     inkscape:cy="873.98367"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -116,13 +116,10 @@
        style="color:#000000;fill:#888a85;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:4;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="path2833"
        d="m 222.99178,155.27927 c -1.65306,1.37692 -3.29432,2.76978 -4.77164,4.33638 -0.1252,0.16262 -0.2356,0.33779 -0.3756,0.48786 -0.0623,0.0668 0.11999,-0.14638 0.14015,-0.23546 0.0482,-0.21294 -0.0852,-0.48976 0.0607,-0.65215 0.41922,-0.46649 1.02155,-0.72827 1.52087,-1.10779 2.13755,-1.62474 4.23532,-3.33573 6.32751,-5.01317 7.81012,-6.23893 15.47101,-12.67309 23.45629,-18.69062 2.19514,-1.65421 4.4416,-3.23919 6.66049,-4.86141 2.06281,-1.50812 4.12307,-3.01973 6.18461,-4.5296 0,0 0.0152,0.0202 0.0152,0.0202 l 0,0 c -9.76539,7.56475 -2.43012,1.79455 -12.43116,9.91342 -7.76058,6.30006 -15.58844,12.51747 -23.33101,18.83991 -1.82875,1.46462 -4.40548,3.55667 -6.36335,5.03737 -0.75736,0.57278 -1.75761,1.65605 -2.9248,1.28599 -0.36921,-0.11707 0.51013,-1.22384 0.50954,-1.04432 1.58258,-1.49881 3.19958,-2.97918 5.00041,-4.21496 0,0 0.3218,0.42838 0.3218,0.42838 z" />
-    <rect
+    <path
        style="fill:none;stroke:none;stroke-width:4.50596236999999977;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="M 171.875 75.03125 L 171.875 230.1875 L 327 230.1875 L 327 75.03125 L 171.875 75.03125 z "
        id="rect3195"
-       width="155.1322"
-       height="155.1322"
-       x="171.87793"
-       y="75.044205"
        inkscape:export-filename="/home/klange/acoustics-desktop/amp_a.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
