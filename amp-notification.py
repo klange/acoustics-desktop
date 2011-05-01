@@ -7,6 +7,7 @@ amp_url = "http://localhost:8080/amp/json.pl"
 
 # Silly hack
 icon_path = "file://%s/amp_a.png" % os.getcwd()
+fallback  = "file://%s/amp_a.png" % os.getcwd()
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -29,14 +30,16 @@ pynotify.init("Acoustics")
 
 last_result = -1
 
+def art_url(artist,album,title):
+    return "http://localhost:8080/amp/art.py?size=64&artist=" + urllib.quote(artist.encode("utf-8")) + "&album=" + urllib.quote(album.encode("utf-8")) + "&title=" + urllib.quote(title.encode("utf-8"))
+
 def appendNotice(title, content):
     n = pynotify.Notification(title, content, icon_path) #"notification-audio-volume-high")
     n.set_hint_string('append','')
     n.show()
 
 while 1:
-    json_output = curl(amp_url)
-    acoustics = simplejson.loads(json_output)
+    acoustics = simplejson.loads(curl(amp_url))
 
     if acoustics['now_playing']:
         if not acoustics['now_playing']['song_id'] == last_result:
@@ -45,6 +48,14 @@ while 1:
             song_artist = acoustics['now_playing']['artist']
             song_album  = acoustics['now_playing']['album']
             print "New song: %s\nby: %s\nfrom: %s" % (song_title, song_artist, song_album)
+            albumart    = simplejson.loads(curl(art_url(song_artist,song_album,song_title)))
+            if albumart["image"] and albumart["image"].startswith("http"):
+                os.system("wget --quiet -O /tmp/_amp_icon " + albumart["image"])
+                os.system("convert -quiet /tmp/_amp_icon /tmp/_amp_icon.png")
+                icon_path = "file:///tmp/_amp_icon.png"
+            else:
+                icon_path = fallback
+            print icon_path.strip()
             appendNotice(song_title,song_artist)
             appendNotice(song_title,song_album)
             appendNotice(song_title,"")
