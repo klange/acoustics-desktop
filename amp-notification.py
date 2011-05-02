@@ -50,10 +50,12 @@ while 1:
             print "New song: %s\nby: %s\nfrom: %s" % (song_title, song_artist, song_album)
             albumart    = simplejson.loads(curl(art_url(song_artist,song_album,song_title)))
             if albumart["image"] and albumart["image"].startswith("http"):
+                os.system("rm -f /tmp/_amp_icon.png")
                 os.system("wget --quiet -O /tmp/_amp_icon " + albumart["image"])
                 os.system("convert -quiet /tmp/_amp_icon /tmp/_amp_icon.png")
                 icon_path = "file:///tmp/_amp_icon.png"
             else:
+                print albumart
                 icon_path = fallback
             print icon_path.strip()
             appendNotice(song_title,song_artist)
