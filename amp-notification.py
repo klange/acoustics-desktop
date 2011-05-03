@@ -38,28 +38,39 @@ def appendNotice(title, content):
     n.set_hint_string('append','')
     n.show()
 
+attempts = 1
+
 while 1:
-    acoustics = simplejson.loads(curl(amp_url))
+    try:
+        acoustics = simplejson.loads(curl(amp_url))
 
-    if acoustics['now_playing']:
-        if not acoustics['now_playing']['song_id'] == last_result:
-            last_result = acoustics['now_playing']['song_id']
-            song_title  = acoustics['now_playing']['title']
-            song_artist = acoustics['now_playing']['artist']
-            song_album  = acoustics['now_playing']['album']
-            print "New song: %s\nby: %s\nfrom: %s" % (song_title, song_artist, song_album)
-            albumart    = simplejson.loads(curl(art_url(song_artist,song_album,song_title)))
-            if albumart["image"] and albumart["image"].startswith("http"):
-                os.system("rm -f /tmp/_amp_icon.png")
-                os.system("wget --quiet -O /tmp/_amp_icon " + albumart["image"])
-                os.system("convert -quiet /tmp/_amp_icon /tmp/_amp_icon.png")
-                icon_path = "file:///tmp/_amp_icon.png"
-            else:
-                print albumart
-                icon_path = fallback
-            print icon_path.strip()
-            appendNotice(song_title,song_artist)
-            appendNotice(song_title,song_album)
-            appendNotice(song_title,"")
-
+        if acoustics['now_playing']:
+            if not acoustics['now_playing']['song_id'] == last_result:
+                last_result = acoustics['now_playing']['song_id']
+                song_title  = acoustics['now_playing']['title']
+                song_artist = acoustics['now_playing']['artist']
+                song_album  = acoustics['now_playing']['album']
+                print "Now Playing: %s\nby: %s\nfrom: %s\n" % (song_title, song_artist, song_album)
+                albumart    = simplejson.loads(curl(art_url(song_artist,song_album,song_title)))
+                if albumart["image"] and albumart["image"].startswith("http"):
+                    os.system("rm -f /tmp/_amp_icon.png")
+                    os.system("wget --quiet -O /tmp/_amp_icon " + albumart["image"])
+                    os.system("convert -quiet /tmp/_amp_icon /tmp/_amp_icon.png")
+                    icon_path = "file:///tmp/_amp_icon.png"
+                else:
+                    icon_path = fallback
+                appendNotice(song_title,song_artist)
+                appendNotice(song_title,song_album)
+                appendNotice(song_title,"")
+        else:
+            if last_result != 0:
+                print "Nothing playing.\n"
+                last_result = 0
+        attempts = 1
+    except:
+        print "Failed to connect or retrieve stuff, attempt",attempts
+        attempts += 1
+        if attempts > 10:
+            print "Failed to get information after ten attempts. Good bye."
+            sys.exit(1)
     time.sleep(5)
