@@ -45,9 +45,10 @@ while 1:
                 print "Now Playing: %s\nby: %s\nfrom: %s\n" % (song_title, song_artist, song_album)
                 albumart    = curl(art_url(song_artist,song_album,song_title))
                 if albumart:
-                    f = open("/tmp/_amp_icon.png", "w")
+                    f = open("/tmp/_amp_icon", "w")
                     f.write(albumart)
                     f.close()
+                    os.system("convert /tmp/_amp_icon /tmp/_amp_icon.png")
                     icon_path = "file:///tmp/_amp_icon.png"
                 else:
                     icon_path = fallback
