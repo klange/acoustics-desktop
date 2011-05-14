@@ -23,7 +23,10 @@ pynotify.init("Acoustics")
 last_result = -1
 
 def art_url(artist,album,title):
-    return "http://localhost:8080/amp/art.py?size=64&artist=" + urllib.quote(artist.encode("utf-8")) + "&album=" + urllib.quote(album.encode("utf-8")) + "&title=" + urllib.quote(title.encode("utf-8") + "&size=64")
+    _artist = str(urllib.quote(artist.encode("utf-8"))).replace("/","%252f")
+    _album  = str(urllib.quote(album.encode("utf-8" ))).replace("/","%252f")
+    _title  = str(urllib.quote(title.encode("utf-8" ))).replace("/","%252f")
+    return "http://localhost:8080/amp/json.pl?mode=art&artist=%s&album=%s&title=%s&size=64" % (_artist, _album, _title)
 
 def appendNotice(title, content):
     n = pynotify.Notification(title, content, icon_path) #"notification-audio-volume-high")
@@ -43,13 +46,17 @@ while 1:
                 song_artist = acoustics['now_playing']['artist']
                 song_album  = acoustics['now_playing']['album']
                 print "Now Playing: %s\nby: %s\nfrom: %s\n" % (song_title, song_artist, song_album)
-                albumart    = curl(art_url(song_artist,song_album,song_title))
-                if albumart:
-                    f = open("/tmp/_amp_icon", "w")
-                    f.write(albumart)
-                    f.close()
-                    os.system("convert /tmp/_amp_icon /tmp/_amp_icon.png")
-                    icon_path = "file:///tmp/_amp_icon.png"
+                art         = art_url(song_artist, song_album, song_title)
+                if art:
+                    albumart    = curl(art)
+                    if albumart:
+                        f = open("/tmp/_amp_icon", "w")
+                        f.write(albumart)
+                        f.close()
+                        os.system("convert /tmp/_amp_icon /tmp/_amp_icon.png")
+                        icon_path = "file:///tmp/_amp_icon.png"
+                    else:
+                        icon_path = fallback
                 else:
                     icon_path = fallback
                 appendNotice(song_title,song_artist)
