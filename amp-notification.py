@@ -3,7 +3,7 @@ import pynotify
 import simplejson, pycurl
 import sys, urllib, time, os
 
-amp_url = "http://localhost:8080/amp/json.pl"
+amp_url = "http://localhost/amp/json.pl"
 
 # Silly hack
 icon_path = "file://%s/amp_a.png" % os.getcwd()
@@ -26,7 +26,7 @@ def art_url(artist,album,title):
     _artist = str(urllib.quote(artist.encode("utf-8"))).replace("/","%252f")
     _album  = str(urllib.quote(album.encode("utf-8" ))).replace("/","%252f")
     _title  = str(urllib.quote(title.encode("utf-8" ))).replace("/","%252f")
-    return "http://localhost:8080/amp/json.pl?mode=art&artist=%s&album=%s&title=%s&size=64" % (_artist, _album, _title)
+    return amp_url + "?mode=art&artist=%s&album=%s&title=%s&size=64" % (_artist, _album, _title)
 
 def appendNotice(title, content):
     n = pynotify.Notification(title, content, icon_path) #"notification-audio-volume-high")
