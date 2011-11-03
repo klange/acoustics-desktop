@@ -59,9 +59,7 @@ while 1:
                         icon_path = fallback
                 else:
                     icon_path = fallback
-                appendNotice(song_title,song_artist)
-                appendNotice(song_title,song_album)
-                appendNotice(song_title,"")
+                appendNotice(song_title,"<br />".join([song_artist,song_album]))
         else:
             if last_result != 0:
                 print "Nothing playing.\n"
