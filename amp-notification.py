@@ -95,7 +95,7 @@ while 1:
                     # Otherwise, use the fallback (album art API command failed miserably)
                     icon_path = fallback
                 # Create the notification bubble
-                notify = pynotify.Notification(song_title, "<br />".join([song_artist,song_album]), icon_path)
+                notify = pynotify.Notification(song_title, "<br />".join([song_artist,song_album,""]), icon_path)
                 # And display it
                 notify.show()
         else:
