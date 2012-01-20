@@ -29,16 +29,25 @@ sys.setdefaultencoding("utf-8")
 
 # The URL of the acoustics instance
 amp_url    = "http://localhost/amp/json.pl"
+room       = ""
 
 # Argument parsing
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "s:", ["server="])
+    opts, args = getopt.getopt(sys.argv[1:], "s:r:", ["server=", "room="])
 except getopt.GetoptError, err:
     print str(err)
     sys.exit(1)
 for o, a in opts:
     if o in ("-s", "--server"):
         amp_url = a + "/json.pl"
+    if o in ("-r", "--room"):
+        room = a
+
+def getPath(additional):
+    if len(room) > 0:
+        return amp_url + "?player_id=" + room + ";" + additional
+    else:
+        return amp_url + "?" + additional
 
 # Time to sleep between polls
 sleep_time = 5
@@ -68,7 +77,7 @@ def art_url(artist,album,title):
     _artist = str(urllib.quote(artist.encode("utf-8"))).replace("/","%252f")
     _album  = str(urllib.quote(album.encode("utf-8" ))).replace("/","%252f")
     _title  = str(urllib.quote(title.encode("utf-8" ))).replace("/","%252f")
-    return amp_url + "?mode=art&artist=%s&album=%s&title=%s&size=64" % (_artist, _album, _title)
+    return getPath("mode=art&artist=%s&album=%s&title=%s&size=64" % (_artist, _album, _title))
 
 # Count the number of failed attempts.
 attempts = 1
@@ -76,7 +85,7 @@ attempts = 1
 while 1:
     try:
         # Retreive the JSON from the API
-        acoustics = simplejson.loads(curl(amp_url))
+        acoustics = simplejson.loads(curl(getPath("")))
         # Check that a song is playing
         if acoustics['now_playing']:
             # If so, check if this isn't the same data as the last time we polled
