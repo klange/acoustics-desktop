@@ -20,7 +20,7 @@
 """
 import pynotify
 import simplejson, pycurl
-import sys, urllib, time, os
+import sys, urllib, time, os, getopt
 
 # Reload `sys` so we can get at the default encoding and set it
 # to unicode (utf-8) so that foreign song titles, etc. work.
@@ -29,6 +29,16 @@ sys.setdefaultencoding("utf-8")
 
 # The URL of the acoustics instance
 amp_url    = "http://localhost/amp/json.pl"
+
+# Argument parsing
+try:
+    opts, args = getopt.getopt(sys.argv[1:], "s:", ["server="])
+except getopt.GetoptError, err:
+    print str(err)
+    sys.exit(1)
+for o, a in opts:
+    if o in ("-s", "--server"):
+        amp_url = a + "/json.pl"
 
 # Time to sleep between polls
 sleep_time = 5
