@@ -70,14 +70,9 @@ pynotify.init("Acoustics")
 # The contents of our last poll
 last_result = -1
 
-def art_url(artist,album,title):
+def art_url(song_id):
     """ Get a URL to request album art from """
-    # We encode everything as quoted utf-8, replace forward slashes with the appropriate
-    # escaped URL character, and then squeeze it all together.
-    _artist = str(urllib.quote(artist.encode("utf-8"))).replace("/","%252f")
-    _album  = str(urllib.quote(album.encode("utf-8" ))).replace("/","%252f")
-    _title  = str(urllib.quote(title.encode("utf-8" ))).replace("/","%252f")
-    return getPath("mode=art&artist=%s&album=%s&title=%s&size=64" % (_artist, _album, _title))
+    return getPath("mode=art;song_id=%d" % (song_id))
 
 # Count the number of failed attempts.
 attempts = 1
@@ -98,7 +93,7 @@ while 1:
                 # Print the currently playing song to stdout. Makes a nice log of what's been playing.
                 print "Now Playing: %s\nby: %s\nfrom: %s\n" % (song_title, song_artist, song_album)
                 # Collect the ablum art URL...
-                art         = art_url(song_artist, song_album, song_title)
+                art         = art_url(last_result)
                 albumart    = curl(art)
                 if albumart:
                     # If we got album art out of that, we're going to write it out
