@@ -7,7 +7,7 @@ if len(sys.argv) < 2:
 	sys.exit(1)
 
 fName = sys.argv[1]
-oName = os.path.join(os.path.dirname(fName),"acoustics-art.tmp.jpg")
+oName = os.path.join(os.path.dirname(fName),"acoustics-art.jpg")
 print "Extracting art from \033[1;34m%s\033[0m..." % fName,
 
 fObj  = File(fName)
