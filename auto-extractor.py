@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import simplejson, pycurl
+import json, pycurl
 import sys, urllib, time, os, getopt
 
 from extract_art import extractArt
@@ -53,12 +53,13 @@ attempts = 1
 while 1:
     try:
         # Retreive the JSON from the API
-        acoustics = simplejson.loads(curl(getPath("")))
+        acoustics = json.loads(curl(getPath("")))
         # Check that a song is playing
         if acoustics['now_playing']:
             # If so, check if this isn't the same data as the last time we polled
             if not acoustics['now_playing']['song_id'] == last_result:
                 # And if it isn't, build a notification bubble.
+                last_output = acoustics['now_playing']['song_id']
                 extractArt(acoustics['now_playing']['path'])
         else:
             # Otherwise, nothing is playing.
