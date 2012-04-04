@@ -59,12 +59,6 @@ while 1:
             # If so, check if this isn't the same data as the last time we polled
             if not acoustics['now_playing']['song_id'] == last_result:
                 # And if it isn't, build a notification bubble.
-                last_result = acoustics['now_playing']['song_id']
-                song_title  = acoustics['now_playing']['title']
-                song_artist = acoustics['now_playing']['artist']
-                song_album  = acoustics['now_playing']['album']
-                # Print the currently playing song to stdout. Makes a nice log of what's been playing.
-                print "Now Playing: %s\nby: %s\nfrom: %s\n" % (song_title, song_artist, song_album)
                 extractArt(acoustics['now_playing']['path'])
         else:
             # Otherwise, nothing is playing.

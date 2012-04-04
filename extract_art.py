@@ -23,6 +23,9 @@ def extractArt(fName):
 	global oNameJPG, oNamePNG
 	oNameJPG = os.path.join(os.path.dirname(fName),"acoustics-art.jpg")
 	oNamePNG = os.path.join(os.path.dirname(fName),"acoustics-art.png")
+	if os.path.exists(oNameJPG) or os.path.exists(oNamePNG):
+		print "Skipping \033[1;34m%s\033[0m, already have art." % fName
+		return 2
 	print "Extracting art from \033[1;34m%s\033[0m..." % fName,
 
 	fObj  = File(fName)
@@ -36,6 +39,7 @@ def extractArt(fName):
 		if "APIC:" in fObj.tags:
 			return writeData(fObj.tags["APIC:"])
 	print "\033[1;31mNothing.\033[0m"
+	return 1
 
 if __name__ == "__main__":
 	if len(sys.argv) < 2:
